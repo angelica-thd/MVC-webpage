@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WebApplication2.Models.sale>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ord_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.qty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.payterms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.store.stor_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title.title1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ord_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.payterms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.store.stor_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title.title1)
+        </td>
+        <td>
+            <a href=@Url.Action("Edit", "Sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id })> Edit |</a>
+            <a href=@Url.Action("Details", "Sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id })>Details |</a>
+            <a href=@Url.Action("Delete", "Sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id })>Delete</a>
+           
+        </td>
+    </tr>
+}
+
+</table>

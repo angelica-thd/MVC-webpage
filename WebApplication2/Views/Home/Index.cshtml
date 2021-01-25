@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Bookstore_name for employees.</h1>
+    <p class="lead">Bookstore_name details handling webpage for employees.</p>
+    <input type="button" class="btn btn-primary btn-lg" value="Handle orders" onclick="location.href='@Url.Action("Index", "Sales")'" />
+   
+
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Handle Authors</h2>
+        <input type="button" class="btn btn-primary btn-lg" value="Authors" onclick="location.href='@Url.Action("Index", "Authors")'" />
+    </div>
+    <div class="col-md-3">
+        <h2>Handle Publishers</h2>
+        <input type="button" class="btn btn-primary btn-lg" value="Publishers" onclick="location.href='@Url.Action("Index", "Publishers")'" />
+    </div>
+    <div class="col-md-3">
+        <h2>Handle Books</h2>
+        <input type="button" class="btn btn-primary btn-lg" value="Books" onclick="location.href='@Url.Action("Index", "Titles")'" />
+    </div>
+    <div class="col-md-3">
+        <h2>Handle Stores</h2>
+        <input type="button" class="btn btn-primary btn-lg" value="Stores" onclick="location.href='@Url.Action("Index", "Stores")'" />
+    </div>
+</div>

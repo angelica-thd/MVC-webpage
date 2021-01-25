@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication2.Models.roysched>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.lorange)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hirange)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.royalty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title.title1)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.lorange)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hirange)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.royalty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title.title1)
+            </td>
+            <td>
+                <a href=@Url.Action("Edit", "Royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange, royalty = item.royalty  })> Edit |</a>
+                <a href=@Url.Action("Details", "Royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange, royalty = item.royalty})>Details |</a>
+                <a href=@Url.Action("Delete", "Royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange, royalty = item.royalty  })>Delete</a>
+             
+            </td>
+        </tr>
+    }
+
+</table>

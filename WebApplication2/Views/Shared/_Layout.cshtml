@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Bookstore_name Manager</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-inverse">
+        <a class="navbar-brand" href=@Url.Action("Index","Home")>Bookstore_name</a>
+    
+
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href=@Url.Action("Index","Home")>Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href=@Url.Action("Index","Sales")>Orders</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Publishers
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="nav navbar-nav navbar-inverse">
+                            <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Publishers")>Publishers</a></li>
+                            <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Pub_info")>Publishers' Information</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Authors
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="nav navbar-nav navbar-inverse">
+                            <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Authors")>Authors</a></li>
+                            <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Titleauthors")>Authors' Books</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Books
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="nav navbar-nav navbar-inverse">
+                              <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Titles")>Books</a></li>
+                              <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Royscheds")>Royalties per price</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href=@Url.Action("Index","Discounts")>Discounts<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href=@Url.Action("Index","Stores")>Stores<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Jobs
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="nav navbar-nav navbar-inverse">
+                            <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Jobs")>Jobs</a></li>
+                            <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Employees")>Employees' Information</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+            </div>
+        </nav>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Bookstore_name Manager</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+</body>
+</html>
