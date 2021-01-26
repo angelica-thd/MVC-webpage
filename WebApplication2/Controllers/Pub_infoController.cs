@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
@@ -19,6 +22,16 @@ namespace WebApplication2.Controllers
         {
             var pub_info = db.pub_info.Include(p => p.publisher);
             return View(pub_info.ToList());
+        }
+        
+        //GET: Pub_info/Logo/{id}
+        public ActionResult Logo(string id)
+        {
+            pub_info pub_info = db.pub_info.Find(id);
+            MemoryStream ms = new MemoryStream(pub_info.logo);
+            Image returnImage = Image.FromStream(ms);
+            FileStreamResult returnimg =  File(ms, "image/jpeg");
+            return View(returnimg);
         }
 
         // GET: Pub_info/Details/5
@@ -94,32 +107,7 @@ namespace WebApplication2.Controllers
             return View(pub_info);
         }
 
-        // GET: Pub_info/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            pub_info pub_info = db.pub_info.Find(id);
-            if (pub_info == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pub_info);
-        }
-
-        // POST: Pub_info/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            pub_info pub_info = db.pub_info.Find(id);
-            db.pub_info.Remove(pub_info);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing)
