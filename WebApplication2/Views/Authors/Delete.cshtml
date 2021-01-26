@@ -76,27 +76,18 @@
         </dd>
 
     </dl>
-    @if (ViewBag.DeleteMessage != null)
+    @if (ViewBag.Message != null)
     {
         <script type="text/javascript">
 
             window.onload = function () {
-                var confirmation = confirm("@ViewBag.DeleteMessage");
+                var confirmation = confirm("@ViewBag.Message");
                 if (confirm)
                     window.location.replace("/Authors");
             };
         </script>
     }
-    @if (ViewBag.RestrictionMessage != null)
-    {
-        <script type="text/javascript">
-
-            window.onload = function () {
-                alert("@ViewBag.RestrictionMessage");
-                window.location.replace("/Authors");
-            };
-        </script>
-    }
+   
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

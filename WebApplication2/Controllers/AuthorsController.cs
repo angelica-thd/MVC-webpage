@@ -76,7 +76,6 @@ namespace WebApplication2.Controllers
                     db.authors.Add(author);
                     db.SaveChanges();
                     ViewBag.Message = "Author added successfully.";
-                    return RedirectToAction("Index");
                 }
             }
             else { ViewBag.Message = "There has been an error during the creation. Please, check the fields again."; }
@@ -110,8 +109,7 @@ namespace WebApplication2.Controllers
             {
                 db.Entry(author).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.EditMessage = "Author's information edited successfully.";
-                return RedirectToAction("Index");
+                ViewBag.Message = "Author's information edited successfully.";
             }
             return View(author);
         }
@@ -141,13 +139,11 @@ namespace WebApplication2.Controllers
                 author author = db.authors.Find(id);
                 db.authors.Remove(author);
                 db.SaveChanges();
-                ViewBag.DeleteMessage = "Are you sure you want to delete this author: " + author.au_lname + "?";
-                RedirectToAction("Index");
+                ViewBag.Message = "Author deleted successfully.";               
             }
             catch(DbUpdateException e)     //db conflict 
             {
-                ViewBag.RestrictionMessage = "Deletion of this author is not available due to system restrictions.";
-                RedirectToAction("Index");
+                ViewBag.Message = "Deletion of this author is not available due to system restrictions.";
             }
 
             return View();

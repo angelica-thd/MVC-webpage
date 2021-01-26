@@ -10,11 +10,14 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    if (ViewBag.EditMessage != null)
+    if (ViewBag.Message != null)
     {
         <script type="text/javascript">
 
-            window.onload = function () {  alert("@ViewBag.Message");};
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Authors");
+            };
 
         </script>
     }

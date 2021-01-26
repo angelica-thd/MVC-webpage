@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
@@ -22,13 +23,13 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Employees/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string emp_id)
         {
-            if (id == null)
+            if (emp_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            employee employee = db.employees.Find(id);
+            employee employee = db.employees.Find(emp_id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -51,26 +52,30 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "emp_id,fname,minit,lname,job_id,job_lvl,pub_id,hire_date")] employee employee)
         {
+
             if (ModelState.IsValid)
             {
-                db.employees.Add(employee);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (employee.emp_id != null || employee.fname != null || employee.lname != null || employee.hire_date != null)
+                {
+                    db.employees.Add(employee);
+                    db.SaveChanges();
+                    ViewBag.Message = "Employee added successfully.";
+                }
+                else ViewBag.Message = "ID, first name, last name and hire date fields are required!";
             }
-
             ViewBag.job_id = new SelectList(db.jobs, "job_id", "job_desc", employee.job_id);
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", employee.pub_id);
             return View(employee);
         }
 
         // GET: Employees/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string emp_id)
         {
-            if (id == null)
+            if (emp_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            employee employee = db.employees.Find(id);
+            employee employee = db.employees.Find(emp_id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -91,7 +96,7 @@ namespace WebApplication2.Controllers
             {
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Message = "Employee's information edited successfully.";
             }
             ViewBag.job_id = new SelectList(db.jobs, "job_id", "job_desc", employee.job_id);
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", employee.pub_id);
@@ -99,13 +104,13 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Employees/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string emp_id)
         {
-            if (id == null)
+            if (emp_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            employee employee = db.employees.Find(id);
+            employee employee = db.employees.Find(emp_id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -116,12 +121,13 @@ namespace WebApplication2.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string emp_id)
         {
-            employee employee = db.employees.Find(id);
+            employee employee = db.employees.Find(emp_id);
             db.employees.Remove(employee);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            ViewBag.Message = "Employee deleted successfully.";
+            return View();
         }
 
         protected override void Dispose(bool disposing)

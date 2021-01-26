@@ -19,6 +19,11 @@ namespace WebApplication2.Controllers
         {
             string query = "select stor_name,discounts.stor_id,discounttype,lowqty,highqty,discount as discount1 from discounts inner join stores on discounts.stor_id = stores.stor_id";
             IEnumerable<discount> discounts = db.Database.SqlQuery<discount>(query);
+         
+            foreach (discount dis in discounts.ToList())
+            {
+                ViewBag.stor_name = new SelectList(db.stores, "stor_name", "stor_id", dis.stor_id);
+            }
             return View(discounts.ToList());
         }
 
@@ -31,6 +36,7 @@ namespace WebApplication2.Controllers
             }
             string query = "select * from discounts where discounttype = @p0 and stor_id = @p1  and discount1= @p2";
             discount discount = db.discounts.SqlQuery(query,  discounttype, stor_id, discount1 ).SingleOrDefault();
+            ViewBag.stor_name = new SelectList(db.stores, "stor_name", "stor_id", discount.stor_id);
             if (discount == null)
             {
                 return HttpNotFound();
