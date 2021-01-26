@@ -50,8 +50,8 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "au_id,au_lname,au_fname,phone,address,city,state,zip,contract")] author author)
         {
-            if (author.zip.Equals(null)) author.zip ="00000";
-            if (!author.au_id.Equals(null) || !author.phone.Equals(null))
+            if (author.zip == null) author.zip ="00000";
+            if (author.au_id != null && author.phone != null )
             {
                 StringBuilder au_id_format = new StringBuilder();
                 StringBuilder phone_format = new StringBuilder();
@@ -69,7 +69,7 @@ namespace WebApplication2.Controllers
                                   
             if (ModelState.IsValid)
             {
-                if (author.au_id.Equals(null) || author.au_lname.Equals(null) || author.au_fname.Equals(null) || author.phone.Equals(null))
+                if (author.au_id == null || author.au_lname == null || author.au_fname == null || author.phone == null)
                     ViewBag.Message = "Id, first name, last name and phone fields are required!";
                 else
                 {
@@ -110,6 +110,7 @@ namespace WebApplication2.Controllers
             {
                 db.Entry(author).State = EntityState.Modified;
                 db.SaveChanges();
+                ViewBag.EditMessage = "Author's information edited successfully.";
                 return RedirectToAction("Index");
             }
             return View(author);
@@ -140,12 +141,13 @@ namespace WebApplication2.Controllers
                 author author = db.authors.Find(id);
                 db.authors.Remove(author);
                 db.SaveChanges();
-                ViewBag.Message = "Author deleted successfully.";
-            }catch(DbUpdateException e)     //db conflict 
-            {
-                ViewBag.Message = "This feature is not available due to system restrictions.";
+                ViewBag.DeleteMessage = "Are you sure you want to delete this author: " + author.au_lname + "?";
                 RedirectToAction("Index");
-
+            }
+            catch(DbUpdateException e)     //db conflict 
+            {
+                ViewBag.RestrictionMessage = "Deletion of this author is not available due to system restrictions.";
+                RedirectToAction("Index");
             }
 
             return View();

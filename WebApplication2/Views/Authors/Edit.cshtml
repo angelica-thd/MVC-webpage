@@ -10,7 +10,14 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    if (ViewBag.EditMessage != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {  alert("@ViewBag.Message");};
+
+        </script>
+    }
     <div class="form-horizontal">
         <h4>author</h4>
         <hr />
@@ -89,6 +96,7 @@
             </div>
         </div>
     </div>
+
 }
 
 <div>

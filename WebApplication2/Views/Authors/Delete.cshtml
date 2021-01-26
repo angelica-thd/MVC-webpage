@@ -76,12 +76,24 @@
         </dd>
 
     </dl>
-    @if (ViewBag.Message != null)
+    @if (ViewBag.DeleteMessage != null)
     {
         <script type="text/javascript">
 
             window.onload = function () {
-                alert("@ViewBag.Message");
+                var confirmation = confirm("@ViewBag.DeleteMessage");
+                if (confirm)
+                    window.location.replace("/Authors");
+            };
+        </script>
+    }
+    @if (ViewBag.RestrictionMessage != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.RestrictionMessage");
+                window.location.replace("/Authors");
             };
         </script>
     }
