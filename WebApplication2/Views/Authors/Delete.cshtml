@@ -81,9 +81,8 @@
         <script type="text/javascript">
 
             window.onload = function () {
-                var confirmation = confirm("@ViewBag.Message");
-                if (confirm)
-                    window.location.replace("/Authors");
+                alert("@ViewBag.Message");
+                window.location.replace("/Authors");
             };
         </script>
     }

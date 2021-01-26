@@ -96,7 +96,7 @@ namespace WebApplication2.Controllers
             {
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.Message = "Employee's information edited successfully.";
+                ViewBag.Message = "Employee`s information edited successfully.";
             }
             ViewBag.job_id = new SelectList(db.jobs, "job_id", "job_desc", employee.job_id);
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", employee.pub_id);

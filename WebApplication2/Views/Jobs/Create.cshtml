@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>job</h4>
         <hr />
@@ -45,6 +45,18 @@
             </div>
         </div>
     </div>
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Jobs");
+
+            };
+
+        </script>
+    }
 }
 
 <div>

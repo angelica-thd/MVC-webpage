@@ -145,7 +145,6 @@ namespace WebApplication2.Controllers
             {
                 ViewBag.Message = "Deletion of this author is not available due to system restrictions.";
             }
-
             return View();
         }
 

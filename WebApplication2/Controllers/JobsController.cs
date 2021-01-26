@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -50,11 +51,13 @@ namespace WebApplication2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.jobs.Add(job);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(job.job_desc != null)
+                {
+                    db.jobs.Add(job);
+                    db.SaveChanges();
+                    ViewBag.Message = "Job created successfully.";
+                }               
             }
-
             return View(job);
         }
 
@@ -109,10 +112,18 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(short id)
         {
-            job job = db.jobs.Find(id);
-            db.jobs.Remove(job);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                job job = db.jobs.Find(id);
+                db.jobs.Remove(job);
+                db.SaveChanges();
+                ViewBag.Message = "Job deleted successfully.";
+            }
+           catch(DbUpdateException e)
+            {
+                ViewBag.Message = "Deletion of this job is not available due to system restrictions.";
+            }
+            return View();
         }
 
         protected override void Dispose(bool disposing)
