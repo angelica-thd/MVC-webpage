@@ -6,11 +6,15 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.store.stor_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.discounttype)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.lowqty)
         </th>
@@ -18,28 +22,33 @@
             @Html.DisplayNameFor(model => model.highqty)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.store.stor_name)
+            @Html.DisplayNameFor(model => model.discount1)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.lowqty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.highqty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.store.stor_name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.store.stor_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.discounttype)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lowqty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.highqty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.discount1)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { discounttype = item.discounttype, stor_id = item.stor_id, discount = item.discount1 })
+            </td>
+        </tr>
+    }
 
 </table>

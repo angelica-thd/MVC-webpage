@@ -42,10 +42,7 @@
                 @Html.DisplayFor(modelItem => item.title.title1)
             </td>
             <td>
-                <a href=@Url.Action("Edit", "Royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange, royalty = item.royalty  })> Edit |</a>
-                <a href=@Url.Action("Details", "Royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange, royalty = item.royalty})>Details |</a>
-                <a href=@Url.Action("Delete", "Royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange, royalty = item.royalty  })>Delete</a>
-             
+                <a href=@Url.Action("Details", "Royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange, royalty = item.royalty})>Details </a>        
             </td>
         </tr>
     }

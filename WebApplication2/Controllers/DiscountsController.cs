@@ -17,18 +17,20 @@ namespace WebApplication2.Controllers
         // GET: Discounts
         public ActionResult Index()
         {
-            var discounts = db.discounts.Include(d => d.store);
+            string query = "select stor_name,discounts.stor_id,discounttype,lowqty,highqty,discount as discount1 from discounts inner join stores on discounts.stor_id = stores.stor_id";
+            IEnumerable<discount> discounts = db.Database.SqlQuery<discount>(query);
             return View(discounts.ToList());
         }
 
         // GET: Discounts/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string discounttype, string stor_id, string discount1)
         {
-            if (id == null)
+            if (discounttype == null || discount1 == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            discount discount = db.discounts.Find(id);
+            string query = "select * from discounts where discounttype = @p0 and stor_id = @p1  and discount1= @p2";
+            discount discount = db.discounts.SqlQuery(query,  discounttype, stor_id, discount1 ).SingleOrDefault();
             if (discount == null)
             {
                 return HttpNotFound();
@@ -36,90 +38,7 @@ namespace WebApplication2.Controllers
             return View(discount);
         }
 
-        // GET: Discounts/Create
-        public ActionResult Create()
-        {
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
-            return View();
-        }
-
-        // POST: Discounts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "discounttype,stor_id,lowqty,highqty,discount1")] discount discount)
-        {
-            if (ModelState.IsValid)
-            {
-                db.discounts.Add(discount);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
-            return View(discount);
-        }
-
-        // GET: Discounts/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            discount discount = db.discounts.Find(id);
-            if (discount == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
-            return View(discount);
-        }
-
-        // POST: Discounts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "discounttype,stor_id,lowqty,highqty,discount1")] discount discount)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(discount).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
-            return View(discount);
-        }
-
-        // GET: Discounts/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            discount discount = db.discounts.Find(id);
-            if (discount == null)
-            {
-                return HttpNotFound();
-            }
-            return View(discount);
-        }
-
-        // POST: Discounts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            discount discount = db.discounts.Find(id);
-            db.discounts.Remove(discount);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+     
         protected override void Dispose(bool disposing)
         {
             if (disposing)
