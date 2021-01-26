@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
@@ -48,12 +50,36 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "au_id,au_lname,au_fname,phone,address,city,state,zip,contract")] author author)
         {
+            if (author.zip.Equals(null)) author.zip ="00000";
+            if (!author.au_id.Equals(null) || !author.phone.Equals(null))
+            {
+                StringBuilder au_id_format = new StringBuilder();
+                StringBuilder phone_format = new StringBuilder();
+                au_id_format.Append(author.au_id.Substring(0, 3)).Append("-").
+               Append(author.au_id.Substring(3, 2)).Append("-").
+               Append(author.au_id.Substring(5, 4));
+                author.au_id = au_id_format.ToString();
+
+                phone_format.Append(author.phone.Substring(0, 3)).Append(" ").
+                    Append(author.phone.Substring(3, 3)).Append("-").
+                    Append(author.phone.Substring(6, 4));
+
+                author.phone = phone_format.ToString();
+            }
+                                  
             if (ModelState.IsValid)
             {
-                db.authors.Add(author);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (author.au_id.Equals(null) || author.au_lname.Equals(null) || author.au_fname.Equals(null) || author.phone.Equals(null))
+                    ViewBag.Message = "Id, first name, last name and phone fields are required!";
+                else
+                {
+                    db.authors.Add(author);
+                    db.SaveChanges();
+                    ViewBag.Message = "Author added successfully.";
+                    return RedirectToAction("Index");
+                }
             }
+            else { ViewBag.Message = "There has been an error during the creation. Please, check the fields again."; }
 
             return View(author);
         }
@@ -109,10 +135,20 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            author author = db.authors.Find(id);
-            db.authors.Remove(author);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                author author = db.authors.Find(id);
+                db.authors.Remove(author);
+                db.SaveChanges();
+                ViewBag.Message = "Author deleted successfully.";
+            }catch(DbUpdateException e)     //db conflict 
+            {
+                ViewBag.Message = "This feature is not available due to system restrictions.";
+                RedirectToAction("Index");
+
+            }
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

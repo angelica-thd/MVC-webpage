@@ -76,8 +76,17 @@
         </dd>
 
     </dl>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
 
-    @using (Html.BeginForm()) {
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

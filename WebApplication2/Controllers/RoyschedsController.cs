@@ -46,7 +46,7 @@ namespace WebApplication2.Controllers
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
             return View();
         }
-
+        /*
         // POST: Royscheds/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -63,23 +63,22 @@ namespace WebApplication2.Controllers
 
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", roysched.title_id);
             return View(roysched);
-        }
+        }*/
 
         // GET: Royscheds/Edit/5
         public ActionResult Edit(string title_id, int lorange, int hirange, int royalty)
         {
-            if (title_id == null )
+            if (title_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //roysched roysched = db.royscheds.Find(title_id);
-            string query = "update roysched set title_id = @p0 and lorange = @p1 and hirange = @p2 and royalty = @p3";
+            string query = "select top 1 * from roysched where title_id = @p0 and lorange = @p1 and hirange = @p2 and royalty = @p3 ";
             roysched roysched = db.royscheds.SqlQuery(query, new string[] { title_id, lorange.ToString(), hirange.ToString(), royalty.ToString() }).SingleOrDefault();
 
-            if (roysched == null)
-            {
-                return HttpNotFound();
-            }
+            //roysched roysched = db.royscheds.Find(title_id);
+            // string query = "update roysched set title_id = @p0 and lorange = @p1 and hirange = @p2 and royalty = @p3";
+            //roysched roysched = db.royscheds.SqlQuery(query, new string[] { title_id, lorange.ToString(), hirange.ToString(), royalty.ToString() }).SingleOrDefault();
+            //ViewBag.RowsAffected = db.Database.ExecuteSqlCommand(query, title_id, lorange, hirange, royalty );
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", roysched.title_id);
             return View(roysched);
         }
@@ -108,13 +107,16 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            string query = "select top 1 * from roysched where title_id = @p0 and lorange = @p1 and hirange = @p2 and royalty = @p3 ";
+            roysched roysched = db.royscheds.SqlQuery(query, new string[] { title_id, lorange.ToString(), hirange.ToString(), royalty.ToString() }).SingleOrDefault();
+
             //roysched roysched = db.royscheds.Find(title_id);
-            string query = "delete from roysched where title_id=@p0 and lorange = @p1 and hirange = @p2 and royalty = @p3";
-            IEnumerable<roysched> roysched = db.Database.SqlQuery<roysched>(query,new string[] { title_id, lorange.ToString(), hirange.ToString(), royalty.ToString()});
-            if (roysched == null)
-            {
-                return HttpNotFound();
-            }
+            //string query = "delete from roysched where title_id=@p0 and lorange = @p1 and hirange = @p2 and royalty = @p3";
+            //IEnumerable<roysched> roysched = db.Database.SqlQuery<roysched>(query,new string[] { title_id, lorange.ToString(), hirange.ToString(), royalty.ToString()});
+            // if (roysched == null)
+            //{
+            //   return HttpNotFound();
+            //}
             return View(roysched);
         }
 
