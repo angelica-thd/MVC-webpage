@@ -267,9 +267,7 @@
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Publishers\Create.cshtml" />
     <Content Include="Views\Publishers\Delete.cshtml" />
-    <Content Include="Views\Publishers\Details.cshtml" />
     <Content Include="Views\Publishers\Edit.cshtml" />
-    <Content Include="Views\Publishers\Index.cshtml" />
     <Content Include="Views\Titles\Create.cshtml" />
     <Content Include="Views\Titles\Delete.cshtml" />
     <Content Include="Views\Titles\Details.cshtml" />
@@ -303,7 +301,9 @@
     <Content Include="Views\Titleauthors\Details.cshtml" />
     <Content Include="Views\Titleauthors\Edit.cshtml" />
     <Content Include="Views\Titleauthors\Index.cshtml" />
-    <Content Include="Views\Publishers\_Logo.cshtml" />
+    <Content Include="Views\Publishers\Index.cshtml" />
+    <Content Include="Views\Publishers\Details.cshtml" />
+    <Content Include="Views\Pub_info\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

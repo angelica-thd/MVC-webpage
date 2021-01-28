@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>publisher</h4>
+    <h4>pub_info</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -33,7 +33,6 @@
         <dd>
             @Html.DisplayFor(model => model.state)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.country)
         </dt>
@@ -41,13 +40,22 @@
         <dd>
             @Html.DisplayFor(model => model.country)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.pub_info.pr_info)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.pub_info.pr_info)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.pub_info.logo)
+        </dt>
+
+        <dd>
+           @if (Model.pub_info != null && Model.pub_info.logo != null)
+            {
+                <img class="img-responsive" src=@Url.Action("Logo","Publishers",new { id = Model.pub_id })>
+            }
         </dd>
 
     </dl>

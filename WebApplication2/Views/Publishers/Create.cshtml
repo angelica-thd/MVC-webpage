@@ -7,10 +7,20 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Publishers");
+            };
+
+        </script>
+    }
     <div class="form-horizontal">
         <h4>publisher</h4>
         <hr />

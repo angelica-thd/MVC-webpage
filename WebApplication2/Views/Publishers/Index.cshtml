@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<WebApplication2.Models.publisher>
-
 @{
     ViewBag.Title = "Index";
 }
@@ -26,10 +25,12 @@
         <th>
             @Html.DisplayNameFor(model => model.pub_info.logo)
         </th>
+        
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.pub_name)
@@ -44,18 +45,24 @@
             @Html.DisplayFor(modelItem => item.country)
         </td>
         <td>
-            @if (item.pub_info != null && item.pub_info.logo != null)
+            @if (item.pub_info != null && item.pub_info.logo!=null)
             {
-                <img class="img-responsive" src=@Url.Action("Logo","Publishers",new { id = item.pub_id }) >
+                <img class="img-responsive" src=@Url.Action("Logo","Publishers",new { id = item.pub_id }) width="250" height="50">
+
             }
 
         </td>
+
+
         <td>
-            @Html.ActionLink("Edit", "Edit", new { pub_id=item.pub_id }) |
-            @Html.ActionLink("Details", "Details", new { pub_id=item.pub_id }) |
+            @Html.ActionLink("Edit", "Edit", new { pub_id = item.pub_id }) |
+            @Html.ActionLink("Details", "Details", new { pub_id = item.pub_id }) |
             @Html.ActionLink("Delete", "Delete", new { pub_id = item.pub_id })
+
         </td>
     </tr>
-}
+    }
 
 </table>
+
+

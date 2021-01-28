@@ -1,8 +1,0 @@
-﻿@model  WebApplication2.Models.publisher
-
-@if (Model.pub_info != null && Model.pub_info.logo != null)
-{
-    <img class="img-responsive" src=@Url.Action("Logo","Pub_infoController",new { id = Model.pub_id }) width="250" height="50">
-}
-
-

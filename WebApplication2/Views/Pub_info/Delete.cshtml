@@ -1,4 +1,4 @@
-﻿@model WebApplication2.Models.publisher
+﻿@model WebApplication2.Models.pub_info
 
 @{
     ViewBag.Title = "Delete";
@@ -12,37 +12,33 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.pub_name)
+            @Html.DisplayNameFor(model => model.publisher.pub_name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.pub_name)
+            @Html.DisplayFor(model => model.publisher.pub_name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.city)
+            @Html.DisplayNameFor(model => model.logo)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.city)
+            @if(Model!= null &&Model.publisher.pub_info != null && Model.logo != null)
+            {
+                <img class="img-responsive" src=@Url.Action("Logo","Publishers",new { id = Model.pub_id })>
+            }
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.state)
+            @Html.DisplayNameFor(model => model.pr_info)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.state)
+            @Html.DisplayFor(model => model.pr_info)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.country)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.country)
-        </dd>
-
+       
 
     </dl>
 
@@ -62,7 +58,7 @@
         }
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "Index","Publishers")
         </div>
     }
 </div>

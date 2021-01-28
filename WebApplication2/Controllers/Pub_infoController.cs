@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
@@ -93,13 +93,80 @@ namespace WebApplication2.Controllers
             {
                 db.Entry(pub_info).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Message = "updated";
+                //return RedirectToAction("Index");
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", pub_info.pub_id);
+            ViewBag.Message = "not updated ";
+            return View();
+        }
+        // GET: Pub_info/Delete/5
+        public ActionResult Delete(string pub_id)
+        {
+            if (pub_id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            pub_info pub_info = db.pub_info.Find(pub_id);
+            if (pub_info == null)
+            {
+                return HttpNotFound();
+            }
             return View(pub_info);
         }
 
-       
+        // POST: Pub_info/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string pub_id)
+        {
+            try
+            {
+                pub_info pub_Info = db.pub_info.Find(pub_id);
+           
+                db.pub_info.Remove(pub_Info);
+                db.SaveChanges();
+                ViewBag.Message = "Publisher's information deleted successfully!";
+           
+            }
+            catch (DbUpdateException e)     //db conflict 
+            {
+                ViewBag.Message = "Deletion of this publisher's information is not available due to system restrictions.";
+            }
+
+            return View();
+        }
+        /*
+         public ActionResult UpdateLogo(HttpPostedFileBase file)
+         {
+             pub_info pub_info = Include("pub_id,logo,pr_info")
+
+             byte[] logo = null;
+             try
+             {
+                 if (file != null && file.ContentLength > 0)
+                 {
+                     var inputStream = file.InputStream;
+                     var memoryStream = inputStream as MemoryStream;
+                     if (memoryStream == null)
+                     {
+                         memoryStream = new MemoryStream();
+                         inputStream.CopyTo(memoryStream);
+                     }
+                     logo = memoryStream.ToArray();
+                     ViewBag.Message = "Updated logo.";
+                     return View();
+                 }
+             }
+             catch (Exception e)
+             {
+                 ViewBag.Message = "Logo update failed.";
+                 return null;
+             }
+             return logo;
+
+         } */
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

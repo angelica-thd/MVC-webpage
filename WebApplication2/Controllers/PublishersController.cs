@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -23,7 +24,7 @@ namespace WebApplication2.Controllers
             return View(publishers.ToList());
         }
 
-        //GET: Pub_info/Logo/{id}
+        //GET: Publishers/Pub_info/Logo/{id}
         public ActionResult Logo(string id)
         {
             if (id == null)
@@ -37,6 +38,9 @@ namespace WebApplication2.Controllers
             }
             return File(publisher.pub_info.logo, "image/png");
         }
+
+      
+
 
         // GET: Publishers/Details/5
         public ActionResult Details(string pub_id)
@@ -67,11 +71,16 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "pub_id,pub_name,city,state,country")] publisher publisher)
         {
+            if(publisher.pub_id==null && publisher.pub_name == null)
+            {
+                ViewBag.Message = "ID and name fields are required!";
+            }          
             if (ModelState.IsValid)
             {
                 db.publishers.Add(publisher);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Message = "Publisher added successfully!";
+                //return RedirectToAction("Index");
             }
 
             ViewBag.pub_id = new SelectList(db.pub_info, "pub_id", "pr_info", publisher.pub_id);
@@ -94,6 +103,8 @@ namespace WebApplication2.Controllers
             return View(publisher);
         }
 
+        
+
         // POST: Publishers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -101,11 +112,13 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "pub_id,pub_name,city,state,country")] publisher publisher)
         {
+            
             if (ModelState.IsValid)
             {
-                db.Entry(publisher).State = EntityState.Modified;
+                db.Entry(publisher).State = EntityState.Modified; 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Message = "Publisher's information edited successfully!";
+                //return RedirectToAction("Index");
             }
             ViewBag.pub_id = new SelectList(db.pub_info, "pub_id", "pr_info", publisher.pub_id);
             return View(publisher);
@@ -131,10 +144,18 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string pub_id)
         {
-            publisher publisher = db.publishers.Find(pub_id);
-            db.publishers.Remove(publisher);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                publisher publisher = db.publishers.Find(pub_id);
+                db.publishers.Remove(publisher);
+                db.SaveChanges();
+                ViewBag.Message = "Publisher deleted successfully!";
+            }catch(DbUpdateException e)     //db conflict 
+            {
+                ViewBag.Message = "Deletion of this publisher is not available due to system restrictions.";
+            }
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)
