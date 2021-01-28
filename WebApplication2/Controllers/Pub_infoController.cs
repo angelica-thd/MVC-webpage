@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
@@ -23,17 +24,8 @@ namespace WebApplication2.Controllers
             var pub_info = db.pub_info.Include(p => p.publisher);
             return View(pub_info.ToList());
         }
-        
-        //GET: Pub_info/Logo/{id}
-        public ActionResult Logo(string id)
-        {
-            pub_info pub_info = db.pub_info.Find(id);
-            MemoryStream ms = new MemoryStream(pub_info.logo);
-            Image returnImage = Image.FromStream(ms);
-            FileStreamResult returnimg =  File(ms, "image/jpeg");
-            return View(returnimg);
-        }
 
+       
         // GET: Pub_info/Details/5
         public ActionResult Details(string id)
         {

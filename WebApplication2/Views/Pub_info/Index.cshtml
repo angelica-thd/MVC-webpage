@@ -26,7 +26,12 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <img type ="image/jpeg" src=@Url.Action("Logo","Pub_infoController",new { id = item.pub_id })>
+            @if (item.logo != null)
+            {
+                <img  src=@Url.Action("Logo","Pub_infoController",new { id = item.pub_id }) width="250" height="50">
+
+            }
+
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.pr_info)

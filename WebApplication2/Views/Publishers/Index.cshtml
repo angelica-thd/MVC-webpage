@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.country)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.pub_info.pr_info)
+            @Html.DisplayNameFor(model => model.pub_info.logo)
         </th>
         <th></th>
     </tr>
@@ -44,7 +44,11 @@
             @Html.DisplayFor(modelItem => item.country)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.pub_info.pr_info)
+            @if (item.pub_info != null && item.pub_info.logo != null)
+            {
+                <img class="img-responsive" src=@Url.Action("Logo","Publishers",new { id = item.pub_id }) >
+            }
+
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { pub_id=item.pub_id }) |

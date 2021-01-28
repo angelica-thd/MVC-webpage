@@ -18,7 +18,24 @@ namespace WebApplication2.Controllers
         public ActionResult Index()
         {
             var publishers = db.publishers.Include(p => p.pub_info);
+            
+           
             return View(publishers.ToList());
+        }
+
+        //GET: Pub_info/Logo/{id}
+        public ActionResult Logo(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            publisher publisher = db.publishers.Find(id);
+            if (publisher == null)
+            {
+                return HttpNotFound();
+            }
+            return File(publisher.pub_info.logo, "image/png");
         }
 
         // GET: Publishers/Details/5

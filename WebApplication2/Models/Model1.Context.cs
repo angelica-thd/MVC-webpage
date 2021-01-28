@@ -15,6 +15,8 @@ namespace WebApplication2.Models
     
     public partial class pubsEntities : DbContext
     {
+        internal object publisher;
+
         public pubsEntities()
             : base("name=pubsEntities")
         {

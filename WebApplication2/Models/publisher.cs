@@ -23,6 +23,7 @@ namespace WebApplication2.Models
     
         public string pub_id { get; set; }
         public string pub_name { get; set; }
+        public byte[] pub_logo { get; set; }
         public string city { get; set; }
         public string state { get; set; }
         public string country { get; set; }
