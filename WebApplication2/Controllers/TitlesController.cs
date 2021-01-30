@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,7 +18,7 @@ namespace WebApplication2.Controllers
         // GET: Titles
         public ActionResult Index()
         {
-            var titles = db.titles.Include(t => t.publisher).Include(t => t.roysched);
+            var titles = db.titles;
             return View(titles.ToList());
         }
 
@@ -59,7 +60,7 @@ namespace WebApplication2.Controllers
             }
 
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
-            ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
+            //ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
             return View(title);
         }
 
@@ -76,7 +77,7 @@ namespace WebApplication2.Controllers
                 return HttpNotFound();
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
-            ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
+            //ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
             return View(title);
         }
 
@@ -118,10 +119,22 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string title_id)
         {
-            title title = db.titles.Find(title_id);
-            db.titles.Remove(title);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                if (title_id != null)
+                {
+                    title title = db.titles.Find(title_id);
+                    db.titles.Remove(title);
+                    db.SaveChanges();
+                    ViewBag.Message = "Book deleted successfully!";
+                }
+                
+            }catch(DbUpdateException e)
+            {
+                ViewBag.Message = "Deletion of this book is not available due to system restrictions.";
+            }
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

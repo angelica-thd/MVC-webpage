@@ -19,8 +19,6 @@ namespace WebApplication2.Controllers
         public ActionResult Index()
         {
             var publishers = db.publishers.Include(p => p.pub_info);
-            
-           
             return View(publishers.ToList());
         }
 

@@ -38,9 +38,7 @@
         <th>
             @Html.DisplayNameFor(model => model.publisher.pub_name)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.roysched.title_id)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -73,13 +71,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.publisher.pub_name)
         </td>
+       
         <td>
-            @Html.DisplayFor(modelItem => item.roysched.title_id)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Titles", new { title_id = item.title_id }) |
-            @Html.ActionLink("Details", "Titles", new { title_id = item.title_id }) |
-            @Html.ActionLink("Delete", "Titles", new { title_id = item.title_id })
+            @Html.ActionLink("Edit", "Edit", new { title_id = item.title_id }) |
+            @Html.ActionLink("Details", "Details", new { title_id = item.title_id }) |
+            @Html.ActionLink("Delete", "Delete", new { title_id = item.title_id })
         </td>
     </tr>
 }

@@ -16,6 +16,7 @@ namespace WebApplication2.Controllers
 {
     public class Pub_infoController : Controller
     {
+        public byte[] current_logo = null;
         private pubsEntities db = new pubsEntities();
 
         // GET: Pub_info
@@ -57,7 +58,7 @@ namespace WebApplication2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.pub_info.Add(pub_info);
+                 db.pub_info.Add(pub_info);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -69,17 +70,25 @@ namespace WebApplication2.Controllers
         // GET: Pub_info/Edit/5
         public ActionResult Edit(string id)
         {
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             pub_info pub_info = db.pub_info.Find(id);
+            current_logo = pub_info.logo;
+            ViewBag.logo = Base64Encode(pub_info.logo.ToString());
             if (pub_info == null)
             {
                 return HttpNotFound();
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", pub_info.pub_id);
             return View(pub_info);
+        }
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
 
         // POST: Pub_info/Edit/5
@@ -89,10 +98,14 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info)
         {
+           // pub_info.logo = current_logo;
             if (ModelState.IsValid)
             {
                 db.Entry(pub_info).State = EntityState.Modified;
-                db.SaveChanges();
+               db.SaveChanges();
+                 string query = "update pub_info set pr_info = @p0 where pub_id = @p1 ";
+                 
+                // pub_info pub_Info = db.pub_info.SqlQuery(query, new string[] {pub_info.pr_info,pub_info.pub_id}).SingleOrDefault();
                 ViewBag.Message = "updated";
                 //return RedirectToAction("Index");
             }

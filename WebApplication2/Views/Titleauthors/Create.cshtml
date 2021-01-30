@@ -7,10 +7,21 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Titleauthors");
+
+            };
+
+        </script>
+    }
     <div class="form-horizontal">
         <h4>titleauthor</h4>
         <hr />

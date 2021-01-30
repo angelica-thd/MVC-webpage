@@ -7,10 +7,21 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Sales");
+            };
+
+        </script>
+    }
     <div class="form-horizontal">
         <h4>sale</h4>
         <hr />
@@ -26,7 +37,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ord_num, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ord_num, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ord_num, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ord_num, @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ord_num, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -34,7 +45,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ord_date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ord_date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ord_date, "{0:yyyy/MM/dd}",
+                    new { htmlAttributes = new { @class = "control-label col-md-2", @type = "date" } })
                 @Html.ValidationMessageFor(model => model.ord_date, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,7 +54,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.qty, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.qty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.qty, new { htmlAttributes = new { @class = "form-control", @type = "number", @Value = 1 } })
                 @Html.ValidationMessageFor(model => model.qty, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +62,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.payterms, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.payterms, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("payterms", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.payterms, "", new { @class = "text-danger" })
             </div>
         </div>

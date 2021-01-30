@@ -5,7 +5,17 @@
 }
 
 <h2>Details</h2>
-
+@{
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Stores");
+            };
+        </script>
+    }
+}
 <div>
     <h4>store</h4>
     <hr />

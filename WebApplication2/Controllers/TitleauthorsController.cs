@@ -58,13 +58,16 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "au_id,title_id,au_ord,royaltyper")] titleauthor titleauthor)
         {
-            if (ModelState.IsValid)
+            if(titleauthor.au_ord<2 && titleauthor.au_ord>0 && titleauthor.royaltyper > 0)
             {
-                db.titleauthors.Add(titleauthor);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
+                if (ModelState.IsValid)
+                {
+                    db.titleauthors.Add(titleauthor);
+                    db.SaveChanges();
+                    ViewBag.Message = "Author's book added successfully!";
+                }
+            }else
+                ViewBag.Message = "Author order should be between 1 and 2 and royalty typer should be greater than 0.";
             ViewBag.au_id = new SelectList(db.authors, "au_id", "au_lname", titleauthor.au_id);
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", titleauthor.title_id);
             return View(titleauthor);
@@ -94,12 +97,16 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "au_id,title_id,au_ord,royaltyper")] titleauthor titleauthor)
         {
-            if (ModelState.IsValid)
+            if (titleauthor.au_ord < 2 && titleauthor.au_ord > 0 && titleauthor.royaltyper > 0)
             {
-                db.Entry(titleauthor).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Entry(titleauthor).State = EntityState.Modified;
+                    db.SaveChanges();
+                    ViewBag.Message = "Author's book added successfully!";
+                }
+            }else
+                ViewBag.Message = "Author order should be between 1 and 2 and royalty typer should be greater than 0.";
             ViewBag.au_id = new SelectList(db.authors, "au_id", "au_lname", titleauthor.au_id);
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", titleauthor.title_id);
             return View(titleauthor);
@@ -128,7 +135,8 @@ namespace WebApplication2.Controllers
             titleauthor titleauthor = db.titleauthors.Find(au_id, title_id);
             db.titleauthors.Remove(titleauthor);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            ViewBag.Message = "Author's book deleted successfully!";
+            return View();
         }
 
         protected override void Dispose(bool disposing)

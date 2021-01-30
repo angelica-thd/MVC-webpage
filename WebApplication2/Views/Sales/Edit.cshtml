@@ -10,53 +10,80 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>sale</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.stor_id)
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
 
-        @Html.HiddenFor(model => model.ord_num)
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Sales");
+            };
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ord_date, htmlAttributes: new { @class = "control-label col-md-2", @readonly = "readonly" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ord_date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ord_date, "", new { @class = "text-danger" })
+        </script>
+    }
+        <div class="form-horizontal">
+            <h4>sale</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.store.stor_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.store.stor_name)
+                    </div>
+                </div>      
+            
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ord_num, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.ord_num)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ord_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ord_date, "{0:yyyy/MM/dd}",
+             new { htmlAttributes = new { @class = "control-label col-md-2", @type = "date", @readonly = "readonly", @Value = ViewBag.ord_date } })
+                        @Html.ValidationMessageFor(model => model.ord_date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.qty, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.qty, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.qty, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.payterms, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("payterms", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.payterms, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.title.title1, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.title.title1)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.qty, htmlAttributes: new { @class = "control-label col-md-2" , @readonly = "readonly" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.qty, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.qty, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.payterms, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.payterms, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.payterms, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @Html.HiddenFor(model => model.title_id)
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
 }
+            <div>
+                
+                @Html.ActionLink("Back to List", "Index")
+            </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -48,15 +49,20 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "stor_id,stor_name,stor_address,city,state,zip")] store store)
         {
-            if (ModelState.IsValid)
+            if (store.stor_id != null && store.stor_name != null && store.stor_address != null)
             {
-                db.stores.Add(store);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.stores.Add(store);
+                    db.SaveChanges();
+                    ViewBag.Message = "Store added successfully!";
+                }
             }
-
-            return View(store);
+            else
+                ViewBag.Message = "Please fill in all the required fields!";
+             return View(store);
         }
+       
 
         // GET: Stores/Edit/5
         public ActionResult Edit(string id)
@@ -80,12 +86,18 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "stor_id,stor_name,stor_address,city,state,zip")] store store)
         {
-            if (ModelState.IsValid)
+            if(store.stor_id != null && store.stor_name != null && store.stor_address != null)
             {
-                db.Entry(store).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Entry(store).State = EntityState.Modified;
+                    db.SaveChanges();
+                    ViewBag.Message = "Store changed successfully!";
+                    // return RedirectToAction("Index");
+                }
+                else ViewBag.Message = "Please fill in all the required fields!";
+
+            } 
             return View(store);
         }
 
@@ -109,10 +121,18 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            store store = db.stores.Find(id);
-            db.stores.Remove(store);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                store store = db.stores.Find(id);
+                db.stores.Remove(store);
+                db.SaveChanges();
+                ViewBag.Message = "Store deleted successfully!";
+            }catch(DbUpdateException e)
+            {
+                ViewBag.Message = "Deletion of this store is not available due to system restrictions.";
+            }
+            return View();
+
         }
 
         protected override void Dispose(bool disposing)

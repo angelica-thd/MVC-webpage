@@ -7,10 +7,18 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Stores");
+            };
+        </script>
+    }
     <div class="form-horizontal">
         <h4>store</h4>
         <hr />
@@ -18,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.stor_id, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.stor_id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.stor_id, new { htmlAttributes = new { @class = "form-control", placeholder = "XXXX" } })
                 @Html.ValidationMessageFor(model => model.stor_id, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control", placeholder = "GR" } })
                 @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,7 +66,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.zip, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.zip, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.zip, new { htmlAttributes = new { @class = "form-control",placeholder = "XXXXX" } })
                 @Html.ValidationMessageFor(model => model.zip, "", new { @class = "text-danger" })
             </div>
         </div>

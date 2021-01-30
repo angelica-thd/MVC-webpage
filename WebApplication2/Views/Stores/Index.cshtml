@@ -8,6 +8,17 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+    @{
+        if (ViewBag.Message != null)
+        {
+            <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Stores");
+            };
+            </script>
+        }
+    }
 </p>
 <table class="table">
     <tr>

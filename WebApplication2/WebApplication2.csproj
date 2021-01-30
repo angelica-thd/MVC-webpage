@@ -176,6 +176,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\publisher.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -188,6 +189,7 @@
     <Compile Include="Models\sale.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SalesMetadata.cs" />
     <Compile Include="Models\store.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -289,7 +291,6 @@
     <Content Include="Views\Pub_info\Details.cshtml" />
     <Content Include="Views\Pub_info\Edit.cshtml" />
     <Content Include="Views\Pub_info\Index.cshtml" />
-    <Content Include="Views\Discounts\Details.cshtml" />
     <Content Include="Views\Discounts\Index.cshtml" />
     <Content Include="Views\Jobs\Create.cshtml" />
     <Content Include="Views\Jobs\Delete.cshtml" />

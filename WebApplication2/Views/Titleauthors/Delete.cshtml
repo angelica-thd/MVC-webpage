@@ -8,6 +8,20 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
+    @{
+        if (ViewBag.Message != null)
+        {
+            <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Titleauthors");
+
+            };
+
+            </script>
+        }
+    }
     <h4>titleauthor</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -45,7 +59,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
