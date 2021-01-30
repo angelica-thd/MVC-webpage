@@ -83,14 +83,26 @@
             @Html.DisplayFor(model => model.publisher.pub_name)
         </dd>
 
-     
 
-      
+
+
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
+        if (ViewBag.Message != null)
+        {
+            <script type="text/javascript">
 
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.location.replace("/Titles");
+
+            };
+
+            </script>
+        }
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")

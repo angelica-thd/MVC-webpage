@@ -17,7 +17,7 @@ namespace WebApplication2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public job()
         {
-            this.employees = new HashSet<employee>();
+            this.employee = new HashSet<employee>();
         }
     
         public short job_id { get; set; }
@@ -26,6 +26,6 @@ namespace WebApplication2.Models
         public byte max_lvl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<employee> employees { get; set; }
+        public virtual ICollection<employee> employee { get; set; }
     }
 }

@@ -15,8 +15,6 @@ namespace WebApplication2.Models
     
     public partial class pubsEntities : DbContext
     {
-        internal object publisher;
-
         public pubsEntities()
             : base("name=pubsEntities")
         {
@@ -32,7 +30,7 @@ namespace WebApplication2.Models
         public virtual DbSet<job> jobs { get; set; }
         public virtual DbSet<pub_info> pub_info { get; set; }
         public virtual DbSet<publisher> publishers { get; set; }
-        public virtual DbSet<sale> sales { get; set; }
+        public virtual DbSet<sales> sales1 { get; set; }
         public virtual DbSet<store> stores { get; set; }
         public virtual DbSet<titleauthor> titleauthors { get; set; }
         public virtual DbSet<title> titles { get; set; }

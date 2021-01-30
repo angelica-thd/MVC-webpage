@@ -17,8 +17,8 @@ namespace WebApplication2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public title()
         {
-            this.sales = new HashSet<sale>();
-            this.titleauthors = new HashSet<titleauthor>();
+            this.sale = new HashSet<sales>();
+            this.titleauthor = new HashSet<titleauthor>();
         }
     
         public string title_id { get; set; }
@@ -34,9 +34,9 @@ namespace WebApplication2.Models
     
         public virtual publisher publisher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sale> sales { get; set; }
+        public virtual ICollection<sales> sale { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<titleauthor> titleauthors { get; set; }
+        public virtual ICollection<titleauthor> titleauthor { get; set; }
         public virtual roysched roysched { get; set; }
     }
 }

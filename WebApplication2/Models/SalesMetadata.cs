@@ -6,16 +6,11 @@ using System.Web;
 
 namespace WebApplication2.Models
 {
-    public class SalesMetadata
+    public class salesMetadata
     {
         private pubsEntities db = new pubsEntities();
 
-        [Display(Name="Store ID")]
-        [Required]
-        [StringLength(4,MinimumLength = 4, ErrorMessage ="Store ID must be 4 characters!")]
-        public string stor_id;
-
-
+       
         [Display(Name = "Store")]
         [Required]
         public string stor_name;
@@ -27,7 +22,7 @@ namespace WebApplication2.Models
 
         [Display(Name = "Order Date")]
         [Required]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime ord_date;
 
         

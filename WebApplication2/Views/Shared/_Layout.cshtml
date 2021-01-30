@@ -18,7 +18,7 @@
                     <a class="nav-link" href=@Url.Action("Index","Home")>Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href=@Url.Action("Index","Sales")>Orders</a>
+                    <a class="nav-link" href=@Url.Action("Index","Sales")>Sales</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -48,8 +48,8 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <ul class="nav navbar-nav navbar-inverse">
-                              <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Titles")>Books</a></li>
-                              <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Royscheds")>Royalties per price</a></li>
+                            <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Titles")>Books</a></li>
+                            <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Royscheds")>Royalties per price</a></li>
                         </ul>
                     </div>
                 </li>
@@ -69,6 +69,12 @@
                             <li class="dropdown-item"><a class="dropdown-item" href=@Url.Action("Index","Employees")>Employees' Information</a></li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href=@Url.Action("Index","Sales")>Top Sales' Authors</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href=@Url.Action("Index","Sales")>Search Orders</a>
                 </li>
 
             </ul>

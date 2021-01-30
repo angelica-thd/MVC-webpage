@@ -42,6 +42,9 @@ namespace WebApplication2.Controllers
         {
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name");
             ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id");
+            ViewBag.title_id = putBookNumber();
+            var query = db.titles.Select(x => x.type).Distinct();
+            ViewBag.type = new SelectList(query);
             return View();
         }
 
@@ -52,14 +55,20 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "title_id,title1,type,pub_id,price,advance,royalty,ytd_sales,notes,pubdate")] title title)
         {
-            if (ModelState.IsValid)
+            if (title.title1 != null && title.type != null && title.pubdate != null)
             {
-                db.titles.Add(title);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.titles.Add(title);
+                    db.SaveChanges();
+                    ViewBag.Message = "Book added successfully!";
+                }
             }
+            else ViewBag.Message = "Please fill in all the required fields!";
 
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
+            var query = db.titles.Select(x => x.type).Distinct();
+            ViewBag.type = new SelectList(query);
             //ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
             return View(title);
         }
@@ -67,6 +76,7 @@ namespace WebApplication2.Controllers
         // GET: Titles/Edit/5
         public ActionResult Edit(string title_id)
         {
+           
             if (title_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -77,7 +87,9 @@ namespace WebApplication2.Controllers
                 return HttpNotFound();
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
-            //ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
+            var query = db.titles.Select(x => x.type).Distinct();
+            ViewBag.type = new SelectList(query);
+            ViewBag.pubdate = title.pubdate;
             return View(title);
         }
 
@@ -95,8 +107,24 @@ namespace WebApplication2.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
-            ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
+            var query = db.titles.Select(x => x.type).Distinct();
+            ViewBag.type = new SelectList(query);
             return View(title);
+        }
+        public string putBookNumber()
+        {
+            var books = db.titles.Select(x => x.title_id).ToList();
+            string newBook = generateID();
+            while (books.Contains(newBook))
+                newBook = generateID();
+            return newBook;
+        }
+
+        public string generateID()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         // GET: Titles/Delete/5

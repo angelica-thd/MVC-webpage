@@ -60,8 +60,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="sales">
-      <EntityTypeMapping TypeName="pubsModel.sale">
+    <EntitySetMapping Name="sales1">
+      <EntityTypeMapping TypeName="pubsModel.sales">
         <MappingFragment StoreEntitySet="sales">
           <ScalarProperty Name="stor_id" ColumnName="stor_id" />
           <ScalarProperty Name="ord_num" ColumnName="ord_num" />

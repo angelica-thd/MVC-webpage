@@ -102,7 +102,7 @@ namespace WebApplication2.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(pub_info).State = EntityState.Modified;
-               db.SaveChanges();
+                db.SaveChanges();
                  string query = "update pub_info set pr_info = @p0 where pub_id = @p1 ";
                  
                 // pub_info pub_Info = db.pub_info.SqlQuery(query, new string[] {pub_info.pr_info,pub_info.pub_id}).SingleOrDefault();

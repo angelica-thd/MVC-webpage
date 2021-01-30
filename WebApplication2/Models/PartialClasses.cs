@@ -8,7 +8,7 @@ namespace WebApplication2.Models
 {
     public class PartialClasses
     {
-        [MetadataType(typeof(SalesMetadata))]
+        [MetadataType(typeof(salesMetadata))]
         public partial class sale
         {
         }

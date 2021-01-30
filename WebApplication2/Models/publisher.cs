@@ -17,21 +17,20 @@ namespace WebApplication2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public publisher()
         {
-            this.employees = new HashSet<employee>();
-            this.titles = new HashSet<title>();
+            this.employee = new HashSet<employee>();
+            this.title = new HashSet<title>();
         }
     
         public string pub_id { get; set; }
         public string pub_name { get; set; }
-        public byte[] pub_logo { get; set; }
         public string city { get; set; }
         public string state { get; set; }
         public string country { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<employee> employees { get; set; }
+        public virtual ICollection<employee> employee { get; set; }
         public virtual pub_info pub_info { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<title> titles { get; set; }
+        public virtual ICollection<title> title { get; set; }
     }
 }

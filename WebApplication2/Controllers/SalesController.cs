@@ -18,7 +18,7 @@ namespace WebApplication2.Controllers
         // GET: Sales
         public ActionResult Index()
         {
-            var sales = db.sales.Include(s => s.store).Include(s => s.title);
+            var sales = db.sales1.Include(s => s.store).Include(s => s.title);
             return View(sales.ToList());
         }
 
@@ -29,7 +29,7 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            sale sale = db.sales.Find(stor_id,ord_num,title_id);
+            sales sale = db.sales1.Find(stor_id,ord_num,title_id);
             if (sale == null)
             {
                 return HttpNotFound();
@@ -42,7 +42,7 @@ namespace WebApplication2.Controllers
         {
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
-            var query = db.sales.Select(x => x.payterms).Distinct();
+            var query = db.sales1.Select(x => x.payterms).Distinct();
             ViewBag.payterms = new SelectList(query);
             ViewBag.ord_num = putOrderNumber();
             return View();
@@ -50,7 +50,7 @@ namespace WebApplication2.Controllers
 
         public string putOrderNumber()
         {
-            var orders = db.sales.Select(x => x.ord_num).ToList();
+            var orders = db.sales1.Select(x => x.ord_num).ToList();
             string newOrder = generateOrder();
             while (orders.Contains(newOrder))
                 newOrder = generateOrder();
@@ -68,7 +68,7 @@ namespace WebApplication2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "stor_id,ord_num,ord_date,qty,payterms,title_id")] sale sale)
+        public ActionResult Create([Bind(Include = "stor_id,ord_num,ord_date,qty,payterms,title_id")] sales sale)
         {
             if(sale.stor_id != null && sale.title_id != null && sale.payterms != null && sale.ord_date != null )
             {
@@ -76,7 +76,7 @@ namespace WebApplication2.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    db.sales.Add(sale);
+                    db.sales1.Add(sale);
                     db.SaveChanges();
                     ViewBag.Message = "Order added successfully!";
                     //return RedirectToAction("Index");
@@ -86,7 +86,7 @@ namespace WebApplication2.Controllers
 
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", sale.stor_id);
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", sale.title_id);
-            var query = db.sales.Select(x => x.payterms).Distinct();
+            var query = db.sales1.Select(x => x.payterms).Distinct();
             ViewBag.payterms = new SelectList(query);
             return View(sale);
         }
@@ -98,14 +98,14 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            sale sale = db.sales.Find(stor_id, ord_num, title_id);
+            sales sale = db.sales1.Find(stor_id, ord_num, title_id);
             if (sale == null)
             {
                 return HttpNotFound();
             }
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", sale.stor_id);
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", sale.title_id);
-            var payterms_query = db.sales.Select(x => x.payterms).Distinct();
+            var payterms_query = db.sales1.Select(x => x.payterms).Distinct();
             ViewBag.payterms = new SelectList(payterms_query);
             ViewBag.ord_date = sale.ord_date;
             return View(sale);
@@ -116,7 +116,7 @@ namespace WebApplication2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "stor_id,ord_num,ord_date,qty,payterms,title_id")] sale sale)
+        public ActionResult Edit([Bind(Include = "stor_id,ord_num,ord_date,qty,payterms,title_id")] sales sale)
         {
             if (sale.stor_id != null && sale.title_id != null && sale.payterms != null)
             {
@@ -132,7 +132,7 @@ namespace WebApplication2.Controllers
 
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", sale.stor_id);
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", sale.title_id);
-            var query = db.sales.Select(x => x.payterms).Distinct();
+            var query = db.sales1.Select(x => x.payterms).Distinct();
             ViewBag.payterms = new SelectList(query);
             return View(sale);
         }
@@ -144,7 +144,7 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            sale sale = db.sales.Find(stor_id, ord_num, title_id);
+            sales sale = db.sales1.Find(stor_id, ord_num, title_id);
             if (sale == null)
             {
                 return HttpNotFound();
@@ -157,8 +157,8 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string stor_id, string ord_num, string title_id)
         {
-            sale sale = db.sales.Find(stor_id, ord_num, title_id);
-            db.sales.Remove(sale);
+            sales sale = db.sales1.Find(stor_id, ord_num, title_id);
+            db.sales1.Remove(sale);
             db.SaveChanges();
             ViewBag.Message = "Order deleted successfully!";
             return View();

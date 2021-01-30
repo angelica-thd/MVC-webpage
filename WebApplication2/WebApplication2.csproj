@@ -152,6 +152,7 @@
     <Compile Include="Models\author.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Author_sales.cs" />
     <Compile Include="Models\discount.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -186,10 +187,10 @@
     <Compile Include="Models\roysched.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sale.cs">
+    <Compile Include="Models\salesMetadata.cs" />
+    <Compile Include="Models\sales.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SalesMetadata.cs" />
     <Compile Include="Models\store.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

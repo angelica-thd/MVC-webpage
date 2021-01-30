@@ -362,7 +362,7 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
           <Property Name="state" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="zip" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
           <Property Name="contract" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="titleauthors" Relationship="Self.FK__titleauth__au_id__31EC6D26" FromRole="authors" ToRole="titleauthor" />
+          <NavigationProperty Name="titleauthor" Relationship="Self.FK__titleauth__au_id__31EC6D26" FromRole="authors" ToRole="titleauthor" />
         </EntityType>
         <EntityType Name="employee">
           <Key>
@@ -387,7 +387,7 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
           <Property Name="job_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="min_lvl" Type="Byte" Nullable="false" />
           <Property Name="max_lvl" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="employees" Relationship="Self.FK__employee__job_id__48CFD27E" FromRole="jobs" ToRole="employee" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__employee__job_id__48CFD27E" FromRole="jobs" ToRole="employee" />
         </EntityType>
         <EntityType Name="pub_info">
           <Key>
@@ -407,11 +407,11 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
           <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="country" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="employees" Relationship="Self.FK__employee__pub_id__4BAC3F29" FromRole="publishers" ToRole="employee" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__employee__pub_id__4BAC3F29" FromRole="publishers" ToRole="employee" />
           <NavigationProperty Name="pub_info" Relationship="Self.FK__pub_info__pub_id__440B1D61" FromRole="publishers" ToRole="pub_info" />
-          <NavigationProperty Name="titles" Relationship="Self.FK__titles__pub_id__2E1BDC42" FromRole="publishers" ToRole="titles" />
+          <NavigationProperty Name="title" Relationship="Self.FK__titles__pub_id__2E1BDC42" FromRole="publishers" ToRole="titles" />
         </EntityType>
-        <EntityType Name="sale">
+        <EntityType Name="sales">
           <Key>
             <PropertyRef Name="stor_id" />
             <PropertyRef Name="ord_num" />
@@ -436,8 +436,8 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
           <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="zip" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="sales" Relationship="Self.FK__sales__stor_id__37A5467C" FromRole="stores" ToRole="sales" />
-          <NavigationProperty Name="discounts" Relationship="Self.FK__discounts__stor___3C69FB99" FromRole="stores" ToRole="discounts" />
+          <NavigationProperty Name="sale" Relationship="Self.FK__sales__stor_id__37A5467C" FromRole="stores" ToRole="sales" />
+          <NavigationProperty Name="discount" Relationship="Self.FK__discounts__stor___3C69FB99" FromRole="stores" ToRole="discounts" />
         </EntityType>
         <EntityType Name="titleauthor">
           <Key>
@@ -466,8 +466,8 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
           <Property Name="notes" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="pubdate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="publisher" Relationship="Self.FK__titles__pub_id__2E1BDC42" FromRole="titles" ToRole="publishers" />
-          <NavigationProperty Name="sales" Relationship="Self.FK__sales__title_id__38996AB5" FromRole="titles" ToRole="sales" />
-          <NavigationProperty Name="titleauthors" Relationship="Self.FK__titleauth__title__32E0915F" FromRole="titles" ToRole="titleauthor" />
+          <NavigationProperty Name="sale" Relationship="Self.FK__sales__title_id__38996AB5" FromRole="titles" ToRole="sales" />
+          <NavigationProperty Name="titleauthor" Relationship="Self.FK__titleauth__title__32E0915F" FromRole="titles" ToRole="titleauthor" />
           <NavigationProperty Name="roysched" Relationship="Self.FK__roysched__title___3A81B327" FromRole="titles" ToRole="roysched" />
         </EntityType>
         <EntityType Name="discount">
@@ -566,7 +566,7 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
         </Association>
         <Association Name="FK__sales__stor_id__37A5467C">
           <End Role="stores" Type="Self.store" Multiplicity="1" />
-          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <End Role="sales" Type="pubsModel.sales" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="stores">
               <PropertyRef Name="stor_id" />
@@ -578,7 +578,7 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
         </Association>
         <Association Name="FK__sales__title_id__38996AB5">
           <End Role="titles" Type="Self.title" Multiplicity="1" />
-          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <End Role="sales" Type="pubsModel.sales" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="titles">
               <PropertyRef Name="title_id" />
@@ -630,7 +630,7 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
           <EntitySet Name="jobs" EntityType="Self.job" />
           <EntitySet Name="pub_info" EntityType="Self.pub_info" />
           <EntitySet Name="publishers" EntityType="Self.publisher" />
-          <EntitySet Name="sales" EntityType="Self.sale" />
+          <EntitySet Name="sales1" EntityType="pubsModel.sales" />
           <EntitySet Name="stores" EntityType="Self.store" />
           <EntitySet Name="titleauthors" EntityType="Self.titleauthor" />
           <EntitySet Name="titles" EntityType="Self.title" />
@@ -659,11 +659,11 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
           </AssociationSet>
           <AssociationSet Name="FK__sales__stor_id__37A5467C" Association="Self.FK__sales__stor_id__37A5467C">
             <End Role="stores" EntitySet="stores" />
-            <End Role="sales" EntitySet="sales" />
+            <End Role="sales" EntitySet="sales1" />
           </AssociationSet>
           <AssociationSet Name="FK__sales__title_id__38996AB5" Association="Self.FK__sales__title_id__38996AB5">
             <End Role="titles" EntitySet="titles" />
-            <End Role="sales" EntitySet="sales" />
+            <End Role="sales" EntitySet="sales1" />
           </AssociationSet>
           <AssociationSet Name="FK__discounts__stor___3C69FB99" Association="Self.FK__discounts__stor___3C69FB99">
             <End Role="stores" EntitySet="stores" />
@@ -743,8 +743,8 @@ warning 6002: The table/view 'pubs.dbo.titleview' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sales">
-            <EntityTypeMapping TypeName="pubsModel.sale">
+          <EntitySetMapping Name="sales1">
+            <EntityTypeMapping TypeName="pubsModel.sales">
               <MappingFragment StoreEntitySet="sales">
                 <ScalarProperty Name="stor_id" ColumnName="stor_id" />
                 <ScalarProperty Name="ord_num" ColumnName="ord_num" />

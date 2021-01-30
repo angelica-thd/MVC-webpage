@@ -17,7 +17,7 @@ namespace WebApplication2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public author()
         {
-            this.titleauthors = new HashSet<titleauthor>();
+            this.titleauthor = new HashSet<titleauthor>();
         }
     
         public string au_id { get; set; }
@@ -31,6 +31,6 @@ namespace WebApplication2.Models
         public bool contract { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<titleauthor> titleauthors { get; set; }
+        public virtual ICollection<titleauthor> titleauthor { get; set; }
     }
 }
